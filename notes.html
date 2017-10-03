@@ -1,0 +1,71 @@
+<ul>
+	<li><strong>Project 4: PHP, Login, Sessions, Protect your API</strong>
+	<ul>
+		<li>Due: Wednesday 10/4/17 at 8:00 am</li>
+		<li>Worth: 65 pts</li>
+		<li>Submission: send me your IP address over slack DM AS WELL AS login.php, phoneNumber.php and verify.php (file upload to slack)</li>
+		<li>Requirements:
+		<ul>
+			<li>No JS in HTML</li>
+			<li>Paths are relative to documentRoot (/var/www/html/)</li>
+			<li>/login/index.html<ul>
+				<li>use a meta tag to redirect to login</li></ul></li>
+			<li>/login/login.php<ul>
+				<li>renders login page HTML that submits to itself (login.php)</li>
+				<li>validates credentials again</li>
+				<li>compares credentials to user in store (you will have to hash the password with the salt and then check the resulting hash against what's stored)</li>
+				<li>if valid credentials<ul>
+					<li>create a session for user</li>
+					<li>redirect to /numverify/phoneNumber.php</li></ul></li>
+				<li>if invalid credentials, render HTML but inject an error message</li></ul></li>
+			<li>/login/login.js<ul>
+				<li>client-side form validation befor submission</li>
+				<li>submits form if it's valid</li></ul></li>
+			<li>/numverify/phoneNumber.php<ul>
+				<li>requires a valid session created by login page</li>
+				<li>if no session exists, replies with a 302 to the login page (/login/login.php) and returns (stopping from rendering HTML)</li>
+				<li>if session exists, renders HTML from project 3</li></ul></li>
+			<li>/numverify/phoneNumber.js<ul>
+				<li>instead of calling numverify directly from here, call verify.php</li>
+				<li>and pass only a number as a GET variable. remove the access_key from this code</li>
+				<li>verify will then take your number and attach the access_key, returning numverify's response to you</li>
+				<li>if verify.php returns a 302 (meaning session isn't valid), redirect page to login page</li></ul></li>
+			<li>/numverify/verify.php<ul>
+				<li>requires a valid session created by login page</li>
+				<li>if no session exists or session is invalid, replies with a 302 to the login page (/login/login.php)</li>
+				<li>otherwise, use file_get_contents to do a get request to numverify api using the number provided in $_GET and a hard-coded access_key</li>
+				<li>return the response directly to the client without modification, or a 400 if an error occured. </li></ul></li>
+			<li>/login/register.php, /login/register.js, /login/success.html, /login/UserStore.php<ul>
+				<li>These are provided for you</li></ul></li>
+		</ul></li>
+		<li>Provided Resources:<ul>
+			<li><a href="examples/register.txt">register.php</a><ul>
+				<li>renders html form to collect registration info</li>
+				<li>takes submission of same form and creates an account for user</li>
+				<li>saves it to a file /data/users.json</li>
+				<li>on success, directs user to login page</li>
+				<li>on fail displays error message on collection page</li></ul></li>
+			<li><a href="examples/register.js">register.js</a><ul>
+				<li>included by register.php's html</li>
+				<li>client-side validation befor submitting</li></ul></li>
+			<li><a href="examples/success.html">success.html</a><ul>
+				<li>static success page to keep the html in register.php clean</li>
+				<li>links to login page</li></ul></li>
+			<li><a href="examples/UserStore.txt">UserStore.php</a><ul>
+				<li>php class, UserStore, that requires a filename (/data/users.json) as a constructor arg</li>
+				<li>has functions to read and write users to disk and check for a user's existance</li></ul></li>
+		</ul></li>
+		<li>Grading:
+		<ul>
+			<li>Provided code installed and used correctly: 10</li>
+			<li>/numverify/phoneNumber.php: 10</li>
+			<li>/numverify/phoneNumber.js: 5</li>
+			<li>/numverify/verify.php: 5</li>
+			<li>/login/login.php: 20</li>
+			<li>/login/login.js: 5</li>
+			<li>/login/index.html redirection: 5</li>
+			<li>code style: 5</li>
+		</ul></li>
+	</ul>
+	</li>
+</ul>
